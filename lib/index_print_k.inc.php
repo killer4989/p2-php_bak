@@ -68,7 +68,7 @@ EOP;
 <a href="menu_k.php?view=favita{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][3]}>{$_conf['k_accesskey_st'][3]}お気に板</a><br>
 <a href="menu_k.php?view=cate{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][4]}>{$_conf['k_accesskey_st'][4]}板ﾘｽﾄ</a><br>
 <a href="subject.php?spmode=recent&amp;sb_view=shinchaku{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][5]}>{$_conf['k_accesskey_st'][5]}最近読んだｽﾚの新着</a><br>
-<a href="subject.php?spmode=recent{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][6]}>{$_conf['k_accesskey_st'][6]}最近読んだｽﾚの全て</a><br>
+<a href="subject.php?spmode=recent&amp;norefresh=true{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][6]}>{$_conf['k_accesskey_st'][6]}最近読んだｽﾚの全て</a><br>
 <a href="subject.php?spmode=res_hist{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][7]}>{$_conf['k_accesskey_st'][7]}書込履歴</a> <a href="read_res_hist.php?nt={$newtime}{$_conf['k_at_a']}">ﾛｸﾞ</a><br>
 <a href="subject.php?spmode=palace&amp;norefresh=1{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][8]}>{$_conf['k_accesskey_st'][8]}ｽﾚの殿堂</a><br>
 <a href="setting.php?nt={$newtime}{$_conf['k_at_a']}"{$_conf['k_accesskey_at'][9]}>{$_conf['k_accesskey_st'][9]}ﾛｸﾞｲﾝ管理</a><br>

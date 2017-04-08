@@ -160,7 +160,7 @@ if (isset($hashes) && is_array($hashes) && count($hashes)) {
 
     <li class="group">履歴</li>
     <?php /* <li><a href="subject.php?spmode=recent&amp;sb_view=shinchaku" target="_self">最近読んだスレの新着</a></li> */ ?>
-    <li><a href="subject.php?spmode=recent" target="_self">最近読んだスレ</a></li>
+    <li><a href="subject.php?spmode=recent&amp;norefresh=true" target="_self">最近読んだスレ</a></li>
 <?php if ($_conf['res_hist_rec_num']) { ?>
     <li><a href="subject.php?spmode=res_hist" target="_self">書き込み履歴</a></li>
 <?php if ($_conf['res_write_rec']) { ?>
