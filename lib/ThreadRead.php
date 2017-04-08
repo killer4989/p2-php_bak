@@ -313,7 +313,7 @@ class ThreadRead extends Thread {
                 $this->onbytes = 0;
                 $this->modified = null;
                 return $this->_downloadDat2chAPI ($uaMona, $SID2ch, 0); // あぼーん検出。全部取り直し。
-            } elseif ($code == '401' && $apiUserStatus == '0') { // 401はAPI認証失敗(再認証する)
+            } elseif ($code == '401' && ($apiUserStatus == '0'||$apiUserStatus == '')) { // 401はAPI認証失敗(再認証する)
                 if (empty ($_REQUEST['relogin2chapi'])) {
                     $_REQUEST['relogin2chapi'] = true;
                     return $this->downloadDat ();
