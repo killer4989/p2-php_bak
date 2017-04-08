@@ -1,28 +1,29 @@
-rep2 �@�\�g���p�b�N �S������(expack all in one) by killer
+rep2 機能拡張パック 全部入り(expack all in one) by killer
 
 
-�����H
+●何？
  rep2-expack_allinone https://github.com/2ch774/p2-php
- ��L��X���ɏグ��ꂽ�C������荞�݂C�ɂȂ����Ƃ�����S�j���S�j������o�[�W�����ł��B
+ 上記やスレに上げられた修正を取り込みつつ気になったところをゴニョゴニョするバージョンです。
 
 
-���Ɛ�
+●免責
 
- �{�\�t�g�E�F�A�̎g�p�ɂ�蒼�ڂ���ъԐړI�ɐ����������Ȃ鑹�Q���⏞�������܂���B
- �g�p�͎��ȐӔC�ŁB
-
-
-������
-
- �ݒu�Җ{�l�����p����̂͂������A�F�؂�؂�Ȃǂ���
- ��O�҂Ɉ��p����Ă��d���Ȃ����Ŏg���̂͂�߂Ă��������B
+ 本ソフトウェアの使用により直接および間接的に生じたいかなる損害も補償いたしません。
+ 使用は自己責任で。
 
 
-�����C�Z���X
+●注意
 
- �{��p2�Ɠ������AX11���C�Z���X�ł��B
+ 設置者本人が悪用するのはもちろん、認証を切るなどして
+ 第三者に悪用されても仕方ない環境で使うのはやめてください。
+ また個人でカスタムしたものをマージしていたりするのでゴミもあったりします。
 
 
-��ChangeLog
+●ライセンス
 
- https://github.com/killer4989/p2-php/commits/master �ɏ����Ă���R�~�b�g���O�łǂ���(��
+ 本家p2と同じく、X11ライセンスです。
+
+
+●ChangeLog
+
+ https://github.com/killer4989/p2-php/commits/master に書いてあるコミットログでどうぞ(ｺﾗ
