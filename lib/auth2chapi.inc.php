@@ -43,6 +43,11 @@
             list($login2chID, $login2chPW, $autoLogin2ch) = $array;
         }
 
+        // 浪人の有効性確認(要 ID / PW)
+        if (!empty($login2chID) && !empty($login2chPW)) {
+            P2Util::checkRoninExpiration();
+        }
+
         try {
             $req = P2Commun::createHTTPRequest($authAPI_url,HTTP_Request2::METHOD_POST);
 

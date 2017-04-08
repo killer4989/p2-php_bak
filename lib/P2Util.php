@@ -2074,6 +2074,7 @@ ERR;
     }
 
     // }}}
+    // {{{
     /**
      * +Wiki:プロフィールIDからBEIDを計算する
      *
@@ -2092,6 +2093,112 @@ ERR;
         return 0;
     }
 
+    // }}}
+    // {{{ checkRoninExpiration()
+
+    /**
+     * 浪人 ID の有効性確認
+     *
+     * @return  boolean  浪人 ID があれば true
+     */
+    function checkRoninExpiration()
+    {
+        global $_conf;
+
+        $url = 'https://auth.bbspink.com/auth/timecheck.php';
+
+        if($_conf['2chapi_use'] == 1) {
+            if(empty($_conf['2chapi_appname'])) {
+                self::pushInfoHtml("<p>p2 error: 2chと通信するために必要な情報が設定されていません。</p>");
+                return false;
+            }
+            $agent = sprintf($_conf['2chapi_ua.auth'], $x_2ch_ua);
+            $x_2ch_ua = $_conf['2chapi_appname'];
+        } else {
+            $agent = 'DOLIB/1.00';
+            $x_2ch_ua = self::getP2UA(false,false);
+        }
+
+        // 2ch浪人<●>ID, PW設定を読み込む
+        if ($array = self::readIdPw2ch()) {
+            list($login2chID, $login2chPW, $autoLogin2ch) = $array;
+
+        } else {
+            return false;
+        }
+
+        try {
+            $req = P2Commun::getHTTPRequest2($url, HTTP_Request2::METHOD_POST);
+
+            $req->setHeader('User-Agent', $agent);
+            $req->setHeader('X-2ch-UA', $x_2ch_ua);
+
+            $req->addPostParameter('email', $login2chID);
+            $req->addPostParameter('pass',  $login2chPW);
+
+            // POSTデータの送信
+            $res = P2Commun::getHTTPResponse($req);
+
+            $code = $res->getStatus();
+            if ($code != 200) {
+                self::pushInfoHtml("<p>p2 Error: HTTP Error({$code})</p>");
+            } else {
+                $body = $res->getBody();
+            }
+        } catch (Exception $e) {
+            self::pushInfoHtml("<p>p2 Error: 浪人<●>の認証確認サーバに接続出来ませんでした。({$e->getMessage()})</p>");
+        }
+
+        // 接続失敗ならば
+        if (empty($body)) {
+            self::pushInfoHtml('<p>p2 info: 浪人<●>IDに関する確認を行うには、PHPの<a href="'.
+                    self::throughIme("http://www.php.net/manual/ja/ref.curl.php").
+                    '">cURL関数</a>又は<a href="'.
+                    self::throughIme("http://www.php.net/manual/ja/ref.openssl.php").
+                    '">OpenSSL関数</a>が有効である必要があります。</p>');
+
+            self::pushInfoHtml("<p>p2 error: 浪人<●>の有効性確認に失敗しました。{$curl_msg}</p>");
+            return false;
+        }
+
+        $body = trim($body);
+
+        // エラー検出
+        if (preg_match('/ERROR (\d+): (.*)/', $body, $matches)) {
+            self::pushInfoHtml("<p>p2 error: 浪人<●>の有効性確認に失敗しました。{$matches[2]}[{$matches[1]}]</p>");
+            return false;
+        }
+
+        // アカウントが未登録
+        if (preg_match('/User does not exists/', $body, $matches)) {
+            self::pushInfoHtml("<p>p2 error: 浪人アカウントが登録されていません｡</p>");
+            return false;
+        }
+
+        // 有効期限取得
+        if (!preg_match('/Date of expiration: (\d+)\/(\d+)\/(\d+) (\d+):(\d+):(\d+)/', $body, $matches)) {
+            self::pushInfoHtml("<p>p2 error: 有効期限が取得できませんでした｡</p>");
+            return false;
+        }
+
+        // タイムゾーンを一時変更
+        date_default_timezone_set('America/Los_Angeles');
+        $expiration = mktime ($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
+
+        date_default_timezone_set(ini_get('date.timezone'));
+        $date = date("Y/m/d H:i:s", $expiration);
+
+        // 有効期限チェック
+        if (time() >= $expiration) {
+            self::pushInfoHtml("<p>p2 error: 浪人<●>の有効期限切れです｡ 有効期限:{$date}</p>");
+            return true;
+        }
+
+        self::pushInfoHtml("<p>p2 info: 浪人<●>の有効期限は {$date} です｡</p>");
+        return true;
+    }
+
+    // }}}
     // {{{ debug()
     /*
     static public function debug()

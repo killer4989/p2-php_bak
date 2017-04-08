@@ -40,6 +40,11 @@
             return false;
         }
 
+        // 浪人の有効性確認(要 ID / PW)
+        if (!empty($login2chID) && !empty($login2chPW)) {
+            P2Util::checkRoninExpiration();
+        }
+
         try {
             $req = P2Commun::createHTTPRequest($auth2ch_url,HTTP_Request2::METHOD_POST);
 
