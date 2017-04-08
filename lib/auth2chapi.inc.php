@@ -82,30 +82,25 @@
             return false;
         }
 
-        if (strpos($body, ':') != false)
-        {
-            $sid = explode(':', $body);
+        $body = rtrim($body);
 
-            if($_conf['2chapi_debug_print']==1)
-            {
-                P2Util::pushInfoHtml($body."<br>".$AuthUA);
-            }
+        // 分解
+        if (!preg_match('/SESSION-ID=(.+?):(.+)/', $body, $matches)) {
+            if (file_exists($_conf['sid2chapi_php'])) { unlink($_conf['sid2chapi_php']); }
+            P2Util::pushInfoHtml("<p>p2 error: 2ch API のレスポンスからSessionIDを取得出来ませんでした。</p>");
+            return false;
+        }
+        $uaMona = $matches[1];
+        $SID2chAPI = $matches[1] . ':' . $matches[2];
 
-            if($sid[0]!='SESSION-ID=Monazilla/1.00') {
-                P2Util::pushInfoHtml("<p>p2 Error: 2ch API のレスポンスからSessionIDを取得出来ませんでした。</p>");
-                return '';
-            }
-
-            $cont = sprintf('<?php $SID2chAPI = %s;', var_export($sid[1], true));
-            if (false === file_put_contents($_conf['sid2chapi_php'], $cont, LOCK_EX)) {
-                P2Util::pushInfoHtml("<p>p2 Error: {$_conf['sid2chapi_php']} を保存できませんでした。ログイン登録失敗。</p>");
-                return '';
-            }
-
-            return $sid[1];
+        // SID の記録保持
+        $cont = sprintf('<?php $uaMona = %s; $SID2chAPI = %s;', var_export($uaMona, true), var_export($SID2chAPI, true));
+        if (false === file_put_contents($_conf['sid2chapi_php'], $cont, LOCK_EX)) {
+            P2Util::pushInfoHtml("<p>p2 Error: {$_conf['sid2chapi_php']} を保存できませんでした。ログイン登録失敗。</p>");
+            return false;
         }
 
-        return '';
+        return $SID2chAPI;
     }
 // }}}
 

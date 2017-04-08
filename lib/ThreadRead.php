@@ -85,7 +85,7 @@ class ThreadRead extends Thread {
                 }
 
                 include $_conf['sid2chapi_php'];
-                return $this->_downloadDat2chAPI ($SID2chAPI, $this->length);
+                return $this->_downloadDat2chAPI ($uaMona, $SID2chAPI, $this->length);
             } else {
 
                 // 2ch 以外の外部板
@@ -103,7 +103,7 @@ class ThreadRead extends Thread {
      *
      * @return mix 取得できたか、更新がなかった場合はtrueを返す
      */
-    protected function _downloadDat2chAPI($sid, $from_bytes) {
+    protected function _downloadDat2chAPI($uaMona, $SID2ch, $from_bytes) {
         global $_conf;
         global $debug;
 
@@ -121,9 +121,10 @@ class ThreadRead extends Thread {
             return true;
         }
 
-        if ($sid == '') {
+        if ($SID2ch == '') {
             return false;
         }
+        $SID2ch = str_replace ("$uaMona:", '', $SID2ch);
 
         $from_bytes = intval ($from_bytes);
 
@@ -145,7 +146,7 @@ class ThreadRead extends Thread {
         }
 
         $url .= $serverName[0] . '/' . $this->bbs . '/' . $this->key;
-        $message = '/v1/' . $serverName[0] . '/' . $this->bbs . '/' . $this->key . $sid . $AppKey;
+        $message = '/v1/' . $serverName[0] . '/' . $this->bbs . '/' . $this->key . $SID2ch . $AppKey;
         $HB = hash_hmac ("sha256", $message, $HMKey);
 
         $purl = parse_url ($url); // URL分解
@@ -174,7 +175,7 @@ class ThreadRead extends Thread {
 
             // POSTする内容
             $req->addPostParameter (array (
-                    'sid' => $sid,
+                    'sid' => $SID2ch,
                     'hobo' => $HB,
                     'appkey' => $AppKey
             ));
@@ -265,7 +266,7 @@ class ThreadRead extends Thread {
                         // echo "あぼーん検出";
                         $this->onbytes = 0;
                         $this->modified = null;
-                        return $this->_downloadDat2chAPI ($sid, 0); // あぼーん検出。全部取り直し。
+                        return $this->_downloadDat2chAPI ($uaMona, $SID2ch, 0); // あぼーん検出。全部取り直し。
                     }
                     $body = substr ($body, 1);
                 }
@@ -285,7 +286,7 @@ class ThreadRead extends Thread {
                         $this->modified = null;
                         P2Util::pushInfoHtml ("<p>rep2 info: {$this->onbytes}/{$this->length} ファイルサイズが変なので、datを再取得</p>");
                         // $GLOBALS['debug'] && $GLOBALS['profiler']->leaveSection("dat_size_check");
-                        return $this->_downloadDat2chAPI ($sid, 0); // datサイズは不正。全部取り直し。
+                        return $this->_downloadDat2chAPI ($uaMona, $SID2ch, 0); // datサイズは不正。全部取り直し。
                     }
                 }
 
@@ -300,7 +301,7 @@ class ThreadRead extends Thread {
                 if ($new_host != $this->host) {
                     $this->old_host = $this->host;
                     $this->host = $new_host;
-                    return $this->_downloadDat2chAPI ($sid, $from_bytes);
+                    return $this->_downloadDat2chAPI ($uaMona, $SID2ch, $from_bytes);
                 } else {
                     return $this->_downloadDat2chNotFound ($code);
                 }
@@ -311,7 +312,7 @@ class ThreadRead extends Thread {
                                         // echo "あぼーん検出";
                 $this->onbytes = 0;
                 $this->modified = null;
-                return $this->_downloadDat2chAPI ($sid, 0); // あぼーん検出。全部取り直し。
+                return $this->_downloadDat2chAPI ($uaMona, $SID2ch, 0); // あぼーん検出。全部取り直し。
             } elseif ($code == '401' && $apiUserStatus == '0') { // 401はAPI認証失敗(再認証する)
                 if (empty ($_REQUEST['relogin2chapi'])) {
                     $_REQUEST['relogin2chapi'] = true;
