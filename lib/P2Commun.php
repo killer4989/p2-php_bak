@@ -57,7 +57,7 @@ class P2Commun
         }
 
         // プロキシ
-        if ($_conf['tor_use'] && self::isHostTor($purl['host'], 0)) { // Tor(.onion)はTor用の設定をセット
+        if ($_conf['tor_use'] && P2Util::isHostTor($purl['host'], 0)) { // Tor(.onion)はTor用の設定をセット
             $req->setConfig (array (
                     'proxy_host' => $_conf['tor_proxy_host'],
                     'proxy_port' => $_conf['tor_proxy_port'],

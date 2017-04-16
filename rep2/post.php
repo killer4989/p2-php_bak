@@ -163,8 +163,13 @@ if (!empty($_POST['maru']) and P2Util::isHost2chs($host) && file_exists($_conf['
         login2ch();
     }
 
-    include $_conf['sid2ch_php'];
-    $post['sid'] = $SID2ch;
+    if($_conf['2chapi_use'] == 1 && $_conf['2chapi_post'] ==1) {
+        include $_conf['sid2chapi_php'];
+        $post['sid'] = $SID2chAPI;
+    } else {
+    	include $_conf['sid2ch_php'];
+        $post['sid'] = $SID2ch;
+    }
 }
 
 // }}}

@@ -313,7 +313,7 @@ class BbsMap
 
         // {{{ 設定
         $map_cache_path = $_conf['cache_dir'] . '/host_bbs_map.txt';
-        $map_cache_lifetime = 60 * 30; // 30分おきに更新があるか確認するがBrdCtl側で最低1時間はアクセスしない。
+        $map_cache_lifetime = 60 * 10; // 10分おきにキャッシュを再構築するが、BrdCtl側で最低30分はアクセスしない。
 
         // }}}
         // {{{ キャッシュ確認

@@ -386,6 +386,7 @@ if ($flags & P2_EDIT_CONF_USER_SKIPPED) {
         'デバッグ用',
         array('2chapi_debug_print','デバッグ用の情報を出力する'),
         '認証情報を変更した場合再認証してください',
+        array('2chapi_post','浪人で書き込む際にAPIのSIDを使用する（人柱機能）'),
     );
     printEditConfGroupHtml($groupname, $conflist, $flags);
 }

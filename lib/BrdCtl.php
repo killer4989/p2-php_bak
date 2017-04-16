@@ -88,7 +88,7 @@ class BrdCtl
             // DLÇ∑ÇÈÅAÇΩÇæÇµnorefreshÇ»ÇÁDLÇµÇ»Ç¢
             if (empty($_GET['nr']) || !file_exists($cachefile.'.p2.brd')) {
                 //echo "DL!<br>";//
-                $cache_time = time() - 60 * 60 * $_conf['menu_dl_interval'];
+                $cache_time = time() - 60 * 30 * $_conf['menu_dl_interval'];
                 $brdfile_online_res = P2Commun::fileDownload($_conf['brdfile_online'], $cachefile, $cache_time);
                 if (isset($brdfile_online_res) && $brdfile_online_res->getStatus() != 304) {
                     $isNewDL = true;

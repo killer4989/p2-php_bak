@@ -6,32 +6,6 @@
 // {{{ _toolbar_i_button()
 
 /**
- * ツールバーアイコン
- *
- * @param string $icon
- * @return string
- */
-function _toolbar_i_icon($icon)
-{
-    static $hd = null;
-
-    if ($hd === null) {
-        $hd = false;
-        if (isset($_SESSION['device_pixel_ratio'])) {
-            if ($_SESSION['device_pixel_ratio'] > 1.0) {
-                $hd = $GLOBALS['_conf']['have_glyphish_2x'];
-            }
-        }
-    }
-
-    if ($hd && preg_match('@img/glyphish/icons2/\\d+-[\\-\\w]+\\.png$@', $icon)) {
-        $icon = substr($icon, 0, -4) . '@2x.png';
-    }
-
-    return $icon;
-}
-
-/**
  * imgタグに解像度毎の代替パスを指定するsrcset属性を生成
  *
  * @param string $icon
@@ -76,7 +50,6 @@ function _toolbar_i_button($icon, $label, $uri, $attrs = '')
         $attrs = str_replace('class="', 'class="hoverable ', $attrs);
     }
 
-    $icon = _toolbar_i_icon($icon);
     $srcset = _toolbar_i_srcset($icon);
 
     return <<<EOS
@@ -176,7 +149,6 @@ function toolbar_i_disabled_button($icon, $label)
         $label = '';
     }
 
-    $icon = _toolbar_i_icon($icon);
     $srcset = _toolbar_i_srcset($icon);
 
     return <<<EOS

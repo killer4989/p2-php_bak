@@ -427,6 +427,10 @@ $conf_user_rad['2chapi_ssl.read'] = array('1' => '‚·‚é', '0' => '‚µ‚È‚¢');
 $conf_user_def['2chapi_debug_print'] = 0; // (0)
 $conf_user_rad['2chapi_debug_print'] = array('1' => '‚·‚é', '0' => '‚µ‚È‚¢');
 
+// 2ch API ‚ðŽg—p‚·‚é
+$conf_user_def['2chapi_post'] = 0; // (0)
+$conf_user_rad['2chapi_post'] = array('1' => '‚·‚é', '0' => '‚µ‚È‚¢');
+
 // }}}
 // {{{ ETC
 
