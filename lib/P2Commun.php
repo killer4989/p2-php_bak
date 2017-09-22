@@ -1,6 +1,6 @@
 <?php
 
-// {{{ P2Util
+// {{{ P2Commun
 
 /**
  * rep2 - 余所のサーバーとお話しするための機能をP2Utilから分離したユーティリティクラス
@@ -200,7 +200,7 @@ class P2Commun
         if (isset($error_msg) && strlen($error_msg) > 0) {
             // エラーメッセージを設定
             if ($disp_error) {
-                $url_t = self::throughIme($url);
+                $url_t = P2Util::throughIme($url);
                 $info_msg_ht = "<p class=\"info-msg\">Error: {$error_msg}<br>";
                 $info_msg_ht .= "rep2 info: <a href=\"{$url_t}\"{$_conf['ext_win_target_at']}>{$url}</a> に接続できませんでした。</p>";
                 self::pushInfoHtml($info_msg_ht);

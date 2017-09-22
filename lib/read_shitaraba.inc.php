@@ -117,7 +117,7 @@ function shitarabaDatTo2chDatLines($mlines)
         $retval = false;
         return $retval;
     }
-    $mdatlines = "";
+    $mdatlines = array();
 
     foreach ($mlines as $ml) {
         $ml = rtrim($ml);

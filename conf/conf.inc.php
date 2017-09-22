@@ -7,7 +7,7 @@
 // バージョン情報
 $_conf = array(
     'p2name'    => 'rep2-expack_allinone',   // rep2の名前
-    'p2version' => '170413.9001',   // rep2のバージョン
+    'p2version' => '170920.9001',   // rep2のバージョン
 );
 
 $_conf['p2ua'] = "{$_conf['p2name']}/{$_conf['p2version']}";
@@ -187,8 +187,10 @@ function p2_init()
 
     mb_internal_encoding('SJIS-win');
     mb_http_output('pass');
-    mb_substitute_character(63); // 文字コード変換に失敗した文字が "?" になる
+    //mb_substitute_character(63); // 文字コード変換に失敗した文字が "?" になる
     //mb_substitute_character(0x3013); // 〓
+    
+    mb_substitute_character('entity'); //文字コード変換に失敗した文字が数値参照に置換される
     //ob_start('mb_output_handler');
 
     if (function_exists('mb_ereg_replace')) {

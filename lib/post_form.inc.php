@@ -27,6 +27,7 @@ if ($_conf['ktai']) {
     $htm['table_break2'] = '';
     $htm['table_end'] = '<br>';
     if ($_conf['iphone']) {
+    	$htm['k_br'] = '';
         $htm['options'] .= <<<EOP
 <div style="text-align:right;">
 <!-- <input type="checkbox" id="autocorrect" onclick="iutil.toggleAutocorrect('MESSAGE', this.checked);"><label for="autocorrect">autocorrect</label> -->
@@ -34,11 +35,11 @@ if ($_conf['ktai']) {
 <input type="button" onclick="iutil.expandTextarea('MESSAGE');" value="＋">
 </div>
 EOP;
-        $htm['name_label'] = '<span style="display:inline-block;width:3em;text-align:right;">名前</span>：';
-        $htm['mail_label'] = '<span style="display:inline-block;width:3em;text-align:right;">E-mail</span>：';
-        $htm['name_extra_at'] = ' autocorrect="off" autocapitalize="off"';
-        $htm['mail_extra_at'] = ' autocorrect="off" autocapitalize="off"';
-        $htm['msg_extra_at'] = ' autocorrect="off" autocapitalize="off"';
+        $htm['name_label'] = '';
+        $htm['mail_label'] = '';
+        $htm['name_extra_at'] = ' class="formelem maxwidth" placeholder="名前(省略可)" autocorrect="off" autocapitalize="off"';
+        $htm['mail_extra_at'] = ' class="formelem maxwidth" placeholder="メール(省略可)" autocorrect="off" autocapitalize="off"';
+        $htm['msg_extra_at'] = ' class="formelem maxwidth" placeholder="本文" autocorrect="off" autocapitalize="off"';
         $htm['submit_extra_at'] = '';
         if ($_conf['expack.editor.mobile.savedraft'] != '0' && $_conf['expack.editor.mobile.savedraft.interval'] > 0) {
             $htm['kaiko_on_js'] = ' onfocus="DraftKakiko.startAutoSave(this.form, ' . ($_conf['expack.editor.mobile.savedraft.interval'] * 1000) . ')"';

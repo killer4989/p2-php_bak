@@ -30,10 +30,10 @@ class Check extends Command
 
         $php_version = phpversion();
 
-        if (version_compare($php_version, '5.4.0-dev', '>=')) {
-            $required_version = $p2_required_version_5_4;
+        if (version_compare($php_version, '7.0.0-dev', '>=')) {
+            $required_version = $p2_required_version_7_x;
         } else {
-            $required_version = $p2_required_version_5_3;
+            $required_version = $p2_required_version_5_x;
         }
 
         // PHP‚Ìƒo[ƒWƒ‡ƒ“

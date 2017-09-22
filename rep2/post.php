@@ -167,7 +167,7 @@ if (!empty($_POST['maru']) and P2Util::isHost2chs($host) && file_exists($_conf['
         include $_conf['sid2chapi_php'];
         $post['sid'] = $SID2chAPI;
     } else {
-    	include $_conf['sid2ch_php'];
+        include $_conf['sid2ch_php'];
         $post['sid'] = $SID2ch;
     }
 }
@@ -424,6 +424,9 @@ function postIt($host, $bbs, $key, $post)
             // ‚µ‚½‚ç‚Î or be.2ch.net‚È‚çAEUC‚É•ÏŠ·
             if (P2Util::isHostJbbsShitaraba($host) || P2Util::isHostBe2chNet($host)) {
                 $value = mb_convert_encoding($value, 'CP51932', 'CP932');
+            } elseif (P2Util::isHost2chs($host) && ! P2Util::isHostBbsPink($host)) {
+                // 2ch‚ÍUnicode‚Ì•¶Žš—ñ‚ðpost‚·‚é
+                $value = html_entity_decode(mb_convert_encoding($value, 'UTF-8', 'CP932'),ENT_QUOTES,'UTF-8');
             }
             $req->addPostParameter($name, $value);
         }
