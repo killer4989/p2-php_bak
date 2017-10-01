@@ -161,7 +161,7 @@ EOF;
         $name = p2h($name);
         $id = p2h($id);
 
-        $html = "<select id=\"{$id}\" name=\"{$name}\">";
+        $html = "<select class=\"form-control\" style=\"width: auto;display: inline-block;\" id=\"{$id}\" name=\"{$name}\">";
         foreach ($fields as $value => $label) {
             if ($value == $default) {
                 if ($xhtml) {

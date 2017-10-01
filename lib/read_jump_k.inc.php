@@ -219,7 +219,7 @@ function _get_read_jump_js(ThreadRead $aThread, $options)
     global $_conf;
 
     return <<<EOP
-<select onchange="location.href = '{$_conf['read_php']}?host={$aThread->host}&amp;bbs={$aThread->bbs}&amp;key={$aThread->key}&amp;ls=' + this.options[this.selectedIndex].value + '&amp;offline=1{$_conf['k_at_a']}';">{$options}</select>
+<select class="form-control" onchange="location.href = '{$_conf['read_php']}?host={$aThread->host}&amp;bbs={$aThread->bbs}&amp;key={$aThread->key}&amp;ls=' + this.options[this.selectedIndex].value + '&amp;offline=1{$_conf['k_at_a']}';">{$options}</select>
 EOP;
 }
 
@@ -234,7 +234,7 @@ function _get_read_jump_filter_js(ThreadRead $aThread, $options)
     global $_conf;
 
     return <<<EOP
-<select onchange="location.href = '{$_conf['read_php']}{$_conf['filter_q']}' + this.options[this.selectedIndex].value + '{$_conf['k_at_a']}';">{$options}</select>
+<select class="form-control" onchange="location.href = '{$_conf['read_php']}{$_conf['filter_q']}' + this.options[this.selectedIndex].value + '{$_conf['k_at_a']}';">{$options}</select>
 EOP;
 }
 

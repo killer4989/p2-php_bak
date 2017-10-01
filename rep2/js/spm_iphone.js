@@ -78,26 +78,6 @@ SPM.hide = (function(evt)
 });
 
 // }}}
-// {{{ SPM.replyTo()
-
-/*
- * ƒŒƒX‚·‚é
- *
- * @param Boolean quote
- * @return void
- */
-SPM.replyTo = (function(quote)
-{
-	var uri = 'spm_k.php?ktool_name=res';
-	if (quote) {
-		uri += '_quote';
-	}
-	uri += '&ktool_value=' + SPM.activeNumber + SPM.activeThread.query;
-
-	window.open(uri);
-});
-
-// }}}
 // {{{ SPM.doAction()
 
 /*
@@ -126,6 +106,7 @@ SPM.doAction = (function()
 	  case 'mail':
 	  case 'id':
 	  case 'msg':
+	  case 'be':
 		uri += target.options[target.selectedIndex].value;
 		break;
 	  default:
@@ -135,6 +116,17 @@ SPM.doAction = (function()
 
 	uri += '&ktool_value=' + SPM.activeNumber + SPM.activeThread.query;
 
+	window.open(uri);
+});
+
+/*
+ * Žw’è‚³‚ê‚½SPM‚ðŠJ‚­
+ *
+ * @return void
+ */
+SPM.open = (function(action)
+{
+	var uri = 'spm_k.php?ktool_name=' + action + '&ktool_value=' + SPM.activeNumber + SPM.activeThread.query;
 	window.open(uri);
 });
 

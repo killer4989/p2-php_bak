@@ -122,7 +122,7 @@ class ShowThreadI extends ShowThread
         //if ($this->_matome) {
         //    $this->spmObjName = sprintf('t%dspm%u', $this->_matome, crc32($this->thread->keydat));
         //} else {
-            $this->spmObjName = sprintf('spm%u', crc32($this->thread->keydat));
+        $this->spmObjName = sprintf('spm%u', crc32($this->thread->keydat));
         //}
     }
 
@@ -132,9 +132,9 @@ class ShowThreadI extends ShowThread
     /**
      * DatレスをHTMLレスに変換する
      *
-     * @param   string  $ares       datの1ライン
-     * @param   int     $i          レス番号
-     * @param   string  $pattern    ハイライト用正規表現
+     * @param   string $ares datの1ライン
+     * @param   int $i レス番号
+     * @param   string $pattern ハイライト用正規表現
      * @return  string
      */
     public function transRes($ares, $i, $pattern = null)
@@ -152,10 +152,10 @@ class ShowThreadI extends ShowThread
         // +Wiki:置換ワード
         if (isset($GLOBALS['replaceWordCtl'])) {
             $replaceWordCtl = $GLOBALS['replaceWordCtl'];
-            $name    = $replaceWordCtl->replace('name', $this->thread, $ares, $i);
-            $mail    = $replaceWordCtl->replace('mail', $this->thread, $ares, $i);
+            $name = $replaceWordCtl->replace('name', $this->thread, $ares, $i);
+            $mail = $replaceWordCtl->replace('mail', $this->thread, $ares, $i);
             $date_id = $replaceWordCtl->replace('date', $this->thread, $ares, $i);
-            $msg     = $replaceWordCtl->replace('msg',  $this->thread, $ares, $i);
+            $msg = $replaceWordCtl->replace('msg', $this->thread, $ares, $i);
         }
 
         $tores = '';
@@ -196,7 +196,7 @@ class ShowThreadI extends ShowThread
             } else {
                 $name = '[串]' . $name;
             }
-        // デフォルトの名前と同じなら省略
+            // デフォルトの名前と同じなら省略
         } elseif ($name === $this->_nanashiName) {
             $name = '';
         }
@@ -296,7 +296,7 @@ EONAME;
 <a class="button" href="{$_conf['read_php']}?host={$this->thread->host}&amp;bbs={$this->thread->bbs}&amp;key={$this->thread->key}&amp;ls={$i}&amp;k_continue=1&amp;nong=1{$_conf['k_at_a']}"{$this->respopup_at}{$this->target_at}>{$this->check_st}</a>
 EOMSG;
 
-        // NGメール変換
+            // NGメール変換
         } elseif ($ng_type & self::NG_MAIL) {
             $mail = <<<EOMAIL
 <s class="ngword" onmouseover="document.getElementById('ngn{$ngaborns_head_hits}').style.display = 'block';">{$mail}</s>
@@ -305,7 +305,7 @@ EOMAIL;
 <div id="ngn{$ngaborns_head_hits}" style="display:none;">{$msg}</div>
 EOMSG;
 
-        // NGID変換
+            // NGID変換
         } elseif ($ng_type & self::NG_ID) {
             $date_id = <<<EOID
 <s><font color="{$STYLE['mobile_read_ngword_color']}">{$date_id}</font></s>
@@ -386,7 +386,7 @@ EOP;
     /**
      * 名前をHTML用に変換する
      *
-     * @param   string  $name   名前
+     * @param   string $name 名前
      * @return  string
      */
     public function transName($name)
@@ -428,8 +428,8 @@ EOP;
     /**
      * datのレスメッセージをHTML表示用メッセージに変換する
      *
-     * @param   string  $msg    メッセージ
-     * @param   int     $mynum  レス番号
+     * @param   string $msg メッセージ
+     * @param   int $mynum レス番号
      * @return  string
      */
     public function transMsg($msg, $mynum)
@@ -577,25 +577,40 @@ EOJS;
     {
         global $_conf;
 
-        return <<<EOP
-<div id="spm">
-<div id="spm-reply">
-    <span id="spm-reply-quote" onclick="SPM.replyTo(true)">&gt;&gt;<span id="spm-num">???</span>にレス</span>
-    <span id="spm-reply-noquote" onclick="SPM.replyTo(false)">[引用なし]</span>
+        $spm = <<<EOP
+<div id="spm" class="col-xs-8">
+<div id="spm-header" class="spm-section">&gt;&gt;<span id="spm-num">???</span></div>
+<div id="spm-menu" class="spm-section">
+    <span id="spm-reply-noquote" onclick="SPM.open('res')">これにレス</span>
+    <span id="spm-reply-quote" onclick="SPM.open('res_quote')">引用してレス</span>
+EOP;
+        if ($_conf['expack.aas.enabled']) {
+            $spm .= <<<EOP
+    <span id="spm-aas" onclick="SPM.open('aas')">AAS</span>
+    <span id="spm-aas-rotate" onclick="SPM.open('aas_rotate')">AAS(回転)</span>
+EOP;
+        }
+        $spm .= <<<EOP
+    <span id="spm-rref" onclick="SPM.open('rref')">逆参照</span>
 </div>
-<div id="spm-action"><select id="spm-select-target">
+<div id="spm-action" >
+<div class="input-group"> 
+<select id="spm-select-target" class=" form-control" style="width:40%;">
     <option value="name">名前</option>
     <option value="mail">メール</option>
     <option value="id" selected>ID</option>
     <option value="msg">本文</option>
-</select>を<select id="spm-select-action">
-    <option value="aborn" selected>あぼーん</option>
-    <option value="ng">NG</option>
+    <option value="be">BE</option>
+</select><select id="spm-select-action"class=" form-control" style="width:60%;">
+    <option value="aborn" selected>をあぼーん</option>
+    <option value="ng">を NG</option>
 <!-- <option value="search">検索</option> -->
-</select><input type="button" onclick="SPM.doAction()" value="OK"></div>
+</select><span class="input-group-btn"><button class="btn" type="button" onclick="SPM.doAction()">OK</button></span>
+</div></div>
 <img id="spm-closer" src="img/iphone/close.png" width="24" height="26" onclick="SPM.hide(event)">
 </div>
 EOP;
+        return $spm;
     }
 
     // }}}
@@ -604,8 +619,8 @@ EOP;
     /**
      * IDフィルタリングリンク変換
      *
-     * @param   string  $idstr  ID:xxxxxxxxxx
-     * @param   string  $id        xxxxxxxxxx
+     * @param   string $idstr ID:xxxxxxxxxx
+     * @param   string $id xxxxxxxxxx
      * @return  string
      */
     public function idFilter($idstr, $id)
@@ -624,20 +639,20 @@ EOP;
         */
 
         $filter_url = $_conf['read_php'] . '?' . http_build_query(array(
-            'host' => $this->thread->host,
-            'bbs'  => $this->thread->bbs,
-            'key'  => $this->thread->key,
-            'ls'   => 'all',
-            'offline' => '1',
-            'idpopup' => '1',
-            'rf' => array(
-                'field'   => ResFilter::FIELD_ID,
-                'method'  => ResFilter::METHOD_JUST,
-                'match'   => ResFilter::MATCH_ON,
-                'include' => ResFilter::INCLUDE_NONE,
-                'word'    => $id,
-            ),
-        ), '', '&amp;') . $_conf['k_at_a'];
+                'host' => $this->thread->host,
+                'bbs' => $this->thread->bbs,
+                'key' => $this->thread->key,
+                'ls' => 'all',
+                'offline' => '1',
+                'idpopup' => '1',
+                'rf' => array(
+                    'field' => ResFilter::FIELD_ID,
+                    'method' => ResFilter::METHOD_JUST,
+                    'match' => ResFilter::MATCH_ON,
+                    'include' => ResFilter::INCLUDE_NONE,
+                    'word' => $id,
+                ),
+            ), '', '&amp;') . $_conf['k_at_a'];
 
         if (isset($this->thread->idcount[$id]) && $this->thread->idcount[$id] > 0) {
             $num_ht = "(<a href=\"{$filter_url}\"{$this->target_at}>{$this->thread->idcount[$id]}</a>)";
@@ -663,7 +678,7 @@ EOP;
             $link = P2Util::throughIme($link);
         }
 
-        return  "<a href=\"{$link}\">{$word}</a>";
+        return "<a href=\"{$link}\">{$word}</a>";
     }
 
     // }}}
@@ -672,9 +687,9 @@ EOP;
     /**
      * 引用変換（単独）
      *
-     * @param   string  $full           >>1-100
-     * @param   string  $qsign          >>
-     * @param   string  $appointed_num    1-100
+     * @param   string $full >>1-100
+     * @param   string $qsign >>
+     * @param   string $appointed_num 1-100
      * @return string
      */
     public function quoteRes($full, $qsign, $appointed_num)
@@ -710,9 +725,9 @@ EOP;
     /**
      * 引用変換（範囲）
      *
-     * @param   string  $full           >>1-100
-     * @param   string  $qsign          >>
-     * @param   string  $appointed_num    1-100
+     * @param   string $full >>1-100
+     * @param   string $qsign >>
+     * @param   string $appointed_num 1-100
      * @return string
      */
     public function quoteResRange($full, $qsign, $appointed_num)
@@ -747,9 +762,9 @@ EOP;
     /**
      * 携帯用外部URL変換
      *
-     * @param   string  $full
-     * @param   string  $url
-     * @param   string  $str
+     * @param   string $full
+     * @param   string $url
+     * @param   string $str
      * @return  string
      */
     public function ktaiExtUrl($full, $url, $str)
@@ -794,7 +809,7 @@ EOP;
     /**
      * 携帯用外部URL変換
      *
-     * @param   array   $s  正規表現にマッチした要素の配列
+     * @param   array $s 正規表現にマッチした要素の配列
      * @return  string
      */
     public function ktaiExtUrlCallback(array $s)
@@ -841,7 +856,7 @@ EOP;
 
         if (preg_match('{^https?://(.+)/(.+)/$}', $purl[0], $m)) {
             //rep2に登録されている板ならばリンクする
-            if (BbsMap::isRegisteredBbs($m[1],$m[2])) {
+            if (BbsMap::isRegisteredBbs($m[1], $m[2])) {
                 $subject_url = "{$_conf['subject_php']}?host={$m[1]}&amp;bbs={$m[2]}";
                 return "<a href=\"{$url}\">{$str}</a> [<a href=\"{$subject_url}{$_conf['k_at_a']}\">板をp2で開く</a>]";
             }
@@ -883,10 +898,10 @@ EOP;
         }
 
         if (preg_match('{^https?://.+?\\.(jpe?g|gif|png)$}i', $url) && empty($purl['query'])) {
-            $picto_url = 'http://pic.to/'.$purl['host'].$purl['path'];
-            $picto_tag = '<a href="'.$picto_url.'">(ﾋﾟ)</a> ';
+            $picto_url = 'http://pic.to/' . $purl['host'] . $purl['path'];
+            $picto_tag = '<a href="' . $picto_url . '">(ﾋﾟ)</a> ';
             if ($_conf['through_ime']) {
-                $link_url  = P2Util::throughIme($purl[0]);
+                $link_url = P2Util::throughIme($purl[0]);
                 $picto_url = P2Util::throughIme($picto_url);
             } else {
                 $link_url = $url;
@@ -1013,7 +1028,7 @@ EOP;
                 }
 
                 // 自動スレタイメモ機能がONでスレタイが記録されていないときはDBを更新
-                if (!is_null($this->img_memo) && strpos($icdb->memo, $this->img_memo) === false){
+                if (!is_null($this->img_memo) && strpos($icdb->memo, $this->img_memo) === false) {
                     $update = new ImageCache2_DataObject_Images();
                     if (!is_null($icdb->memo) && strlen($icdb->memo) > 0) {
                         $update->memo = $this->img_memo . ' ' . $icdb->memo;
@@ -1026,7 +1041,8 @@ EOP;
                 // expack.ic2.fav_auto_rank_override の設定とランク条件がOKなら
                 // お気にスレ自動画像ランクを上書き更新
                 if ($rank !== null &&
-                        self::isAutoFavRankOverride($icdb->rank, $rank)) {
+                    self::isAutoFavRankOverride($icdb->rank, $rank)
+                ) {
                     if ($update === null) {
                         $update = new ImageCache2_DataObject_Images();
                         $update->whereAddQuoted('uri', '=', $v['url']);
@@ -1038,8 +1054,8 @@ EOP;
                     $update->update();
                 }
 
-            // 画像がキャッシュされていないとき
-            // 自動スレタイメモ機能がONならクエリにUTF-8エンコードしたスレタイを含める
+                // 画像がキャッシュされていないとき
+                // 自動スレタイメモ機能がONならクエリにUTF-8エンコードしたスレタイを含める
             } else {
                 // 画像がブラックリストorエラーログにあるか確認
                 if (false !== ($errcode = $icdb->ic2_isError($v['url']))) {
@@ -1067,22 +1083,24 @@ EOP;
                 $backto = '';
             }
 
+            $result = "";
+
             if (is_null($img_str)) {
                 $result .= sprintf('<a href="%s%s">[IC2:%s:%s]</a>',
-                                   $img_url,
-                                   $backto,
-                                   p2h($purl['host']),
-                                   p2h(basename($purl['path']))
-                                   );
+                    $img_url,
+                    $backto,
+                    p2h($purl['host']),
+                    p2h(basename($purl['path']))
+                );
             }
 
             $img_title = p2h($purl['host'])
-                    . '&#10;'
-                    . p2h(basename($purl['path']));
+                . '&#10;'
+                . p2h(basename($purl['path']));
             $result .= "<a class=\"limelight\" href=\"{$src_url}\" title=\"{$img_title}\" target=\"_blank\">{$img_str}</a>"
-                  //. ' <img class="ic2-show-info" src="img/s2a.png" width="16" height="16" onclick="ic2info.show('
-                    . ' <input type="button" class="ic2-show-info" value="i" onclick="ic2info.show('
-                    . (($img_id) ? $img_id : "'{$v['url']}'") . ', event)">';
+                //. ' <img class="ic2-show-info" src="img/s2a.png" width="16" height="16" onclick="ic2info.show('
+                . ' <input type="button" class="ic2-show-info" value="i" onclick="ic2info.show('
+                . (($img_id) ? $img_id : "'{$v['url']}'") . ', event)">';
         }
 
         $linkUrlResult = $this->plugin_linkURL($url, $purl, $str);
@@ -1125,35 +1143,37 @@ EOP;
         }
         $plus = array_unique($plus);
         $plus_cnt = count(array_diff($plus, $anchors));
-        $plus_str = count($plus) > 0 ? '+' .  ($plus_cnt > 0 ? $plus_cnt : '') : '';
+        $plus_str = count($plus) > 0 ? '+' . ($plus_cnt > 0 ? $plus_cnt : '') : '';
 
         $url = $_conf['read_php'] . '?' . http_build_query(array(
-            'host' => $this->thread->host,
-            'bbs'  => $this->thread->bbs,
-            'key'  => $this->thread->key,
-            'ls'   => $resnum,
-            'offline' => '1',
-            'showbl' => '1',
-        ), '', '&amp;') . $_conf['k_at_a'];
+                'host' => $this->thread->host,
+                'bbs' => $this->thread->bbs,
+                'key' => $this->thread->key,
+                'ls' => $resnum,
+                'offline' => '1',
+                'showbl' => '1',
+            ), '', '&amp;') . $_conf['k_at_a'];
 
         $suppress = false;
         $n = 0;
         $reslist = array();
-        foreach($anchors as $anchor) {
+        foreach ($anchors as $anchor) {
             if ($anchor == $resnum) continue;
             $n++;
             if ($_conf['mobile.backlink_list.suppress'] > 0
-                && $n > $_conf['mobile.backlink_list.suppress']) {
+                && $n > $_conf['mobile.backlink_list.suppress']
+            ) {
                 $suppress = true;
                 break;
             }
-            $reslist[] = $this->quoteRes('>>'.$anchor, '>>', $anchor);
+            $reslist[] = $this->quoteRes('>>' . $anchor, '>>', $anchor);
         }
 
         $res_navi = '';
         if ($_conf['mobile.backlink_list.openres_navi'] == 1
             || ($_conf['mobile.backlink_list.openres_navi'] == 2
-                && $suppress === true)) {
+                && $suppress === true)
+        ) {
             if (count($anchors) > 1 || $plus_str) {
                 $res_navi = "(<a href=\"{$url}\"{$this->target_at}>"
                     . (count($anchors) > 1 ? count($anchors) : '')

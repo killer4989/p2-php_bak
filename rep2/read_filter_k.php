@@ -23,6 +23,7 @@ if ($_conf['iphone']) {
     $word_field_ht = ResFilterElement::getWordField(array(
         'autocorrect' => 'off',
         'autocapitalize' => 'off',
+        'class' => 'form-control',
     ));
 } else {
     $word_field_ht = ResFilterElement::getWordField();

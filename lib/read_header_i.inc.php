@@ -68,8 +68,7 @@ if ($do_filtering) {
 // {{{ ヘッダ要素
 
 $_conf['extra_headers_ht'] .= <<<EOS
-<script type="text/javascript" src="js/jquery-{$_conf['jquery_version']}.min.js"></script>
-<script type="text/javascript" src="js/jquery.skOuterClick.js"></script>
+<script type="text/javascript" src="js/jquery.skOuterClick.js?{$_conf['p2_version_id']}"></script>
 <script type="text/javascript" src="js/respopup_iphone.js?{$_conf['p2_version_id']}"></script>
 <script type="text/javascript" src="js/preview_video.js?{$_conf['p2_version_id']}"></script>
 EOS;
@@ -216,30 +215,8 @@ echo '<td>';
 echo toolbar_i_aborn_button('img/glyphish/icons2/128-bone.png', 'あぼーん', $thread_info);
 echo '</td>';
 
-// ログ削除
-echo '<td>';
-if (file_exists($aThread->keydat)) {
-    $escaped_url = "info.php?{$host_bbs_key_q}{$ttitle_en_q}&amp;dele=1{$_conf['k_at_a']}";
-    echo toolbar_i_standard_button('img/glyphish/icons2/64-zap.png', 'ログ削除', $escaped_url);
-} else {
-    echo toolbar_i_disabled_button('img/glyphish/icons2/64-zap.png', 'ログ削除');
-}
-echo '</td>';
-
-echo '</tr>';
-
-// }}}
-
-echo '</tbody></table>';
-
-// {{{ その他 - SPMフォーム
-
 // IC2リンク、件数
 if ($_conf['expack.ic2.enabled'] && $_conf['expack.ic2.thread_imagelink']) {
-    echo '<table><tbody><tr>';
-    echo '<td colspan="4">';
-    echo kspform($aThread);
-    echo '</td>';
     $escaped_url = 'iv2.php?field=memo&amp;keyword='
         . rawurlencode($aThread->ttitle)
         . "&amp;session_no_close=1{$_conf['k_at_a']}";
@@ -264,13 +241,14 @@ if ($_conf['expack.ic2.enabled'] && $_conf['expack.ic2.thread_imagelink']) {
         echo toolbar_i_opentab_button('img/glyphish/icons2/42-photos.png',
             '画像', $escaped_url);
     }
-    echo '</td></tr></tbody></table>';
-} else {
-    echo kspform($aThread);
+    echo '</td>';
 }
 
+echo '</tr>';
 
 // }}}
+
+echo '</tbody></table>';
 
 echo '</div>';
 
@@ -281,6 +259,7 @@ $htm['rf_hidden_fields'] = ResFilterElement::getHiddenFields($aThread->host, $aT
 $htm['rf_word_field'] = ResFilterElement::getWordField(array(
     'autocorrect' => 'off',
     'autocapitalize' => 'off',
+    'class' => 'form-control',
 ));
 $htm['rf_field_field'] = ResFilterElement::getFieldField();
 $htm['rf_method_field'] = ResFilterElement::getMethodField();
@@ -290,10 +269,17 @@ $htm['rf_include_field'] = ResFilterElement::getIncludeField();
 echo <<<EOP
 <div id="read_toolbar_filter" class="extra">
 <form id="read_filter" method="get" action="{$_conf['read_php']}" accept-charset="{$_conf['accept_charset']}">
-{$htm['rf_hidden_fields']}{$htm['rf_word_field']}
-<input type="submit" id="submit1" name="submit_filter" value="検索"><br>
+{$htm['rf_hidden_fields']}
+<div class="input-group form-group">
+{$htm['rf_word_field']}
+<span class="input-group-btn">
+<button type="submit" id="submit1" name="submit_filter" value="検索" class="btn">検索</button>
+</span>
+</div>
+<div class="form-group">
 {$htm['rf_field_field']}に{$htm['rf_method_field']}を{$htm['rf_match_field']}
 {$htm['rf_include_field']}
+</div>
 {$_conf['detect_hint_input_ht']}{$_conf['k_input_ht']}
 </form>
 </div>

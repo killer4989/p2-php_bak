@@ -130,7 +130,6 @@ EOP;
 // iPhone
 if ($_conf['iphone']) {
     $_conf['extra_headers_ht'] .= <<<EOS
-<script type="text/javascript" src="js/jquery-{$_conf['jquery_version']}.min.js"></script>
 <script type="text/javascript" src="js/jquery.skOuterClick.js"></script>
 <script type="text/javascript" src="js/respopup_iphone.js?{$_conf['p2_version_id']}"></script>
 EOS;

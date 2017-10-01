@@ -123,12 +123,12 @@ if (!$disp_navi['all_once']) {
         }*/
     }
 
-    $k_sb_navi_ht = "<select onchange=\"location.href = '{$_conf['subject_php']}?{$paging_q}&amp;from=' + this.options[this.selectedIndex].value + '{$_conf['k_at_a']}';\">{$k_sb_navi_select_from_ht}</select>";
+    $k_sb_navi_ht = "<select class=\"form-control\" style=\"width:auto;display: inline;\" onchange=\"location.href = '{$_conf['subject_php']}?{$paging_q}&amp;from=' + this.options[this.selectedIndex].value + '{$_conf['k_at_a']}';\">{$k_sb_navi_select_from_ht}</select>";
 }
 
 if ($sb_all_pages < 2) {
     $sb_all_pages = 1;
-    $k_sb_navi_ht = '<select><option>1</option></select>';
+    $k_sb_navi_ht = '<select class="form-control" style="width:auto;display: inline;"><option>1</option></select>';
 }
 
 // }}}

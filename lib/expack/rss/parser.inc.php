@@ -50,7 +50,7 @@ function p2GetRSS($remotefile, $atom = 0)
     }
 
     // If-Modified-Sinceつきでダウンロード（ファイルが無いか、古いか、強制リロードのとき）
-    $cache_time = ($refresh) ? 0 : $_conf['expack.rss.check_interval'] * 60);
+    $cache_time = ($refresh) ? 0 : ($_conf['expack.rss.check_interval'] * 60);
     $dl = P2Commun::fileDownload($remotefile, $localpath,$cache_time, true, true);
 
     // キャッシュが更新されなかったか、ダウンロード成功ならRSSをパース

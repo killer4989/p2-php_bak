@@ -12,7 +12,7 @@ $_conf['expack.ic2.general.cacheuri'] = './ic';
 // DSN (DBに接続するためのデータソース名)
 // @link http://jp.pear.php.net/manual/ja/package.database.db.intro-dsn.php
 // 例)
-//  MySQL:       'mysql://username:password@localhost:3306/database'
+//  MySQL:       'mysqli://username:password@localhost:3306/database'
 //  PostgreSQL:  'pgsql://username:password@localhost:5432/database'
 //  SQLite2:     'sqlite:///' . $_conf['db_dir'] . '/imgcache.sqlite'
 // 注1: username,password,databaseは実際のものと読み替える。

@@ -182,9 +182,11 @@ if ($board_info && $_conf['expack.misc.multi_favs']) {
 
 echo <<<EOP
 <form method="get" action="{$_conf['read_new_k_php']}">
-{$sb_form_hidden_ht}<input type="hidden" name="nt" value="1">{$shinchaku_norefresh_ht}
-ñ¢ì«êîÇ™<input type="text" name="unum_limit" value="100" size="4" autocorrect="off" autocapitalize="off" placeholder="#">ñ¢ñûÇÃ
-<input type="submit" value="êVÇ‹Ç∆Çﬂ">
+{$sb_form_hidden_ht}
+<div class="input-group" >
+<input type="hidden" name="nt" value="1">{$shinchaku_norefresh_ht}
+<input type="text" class="form-control" name="unum_limit" value="100" size="4"  placeholder="ñ¢ì«êî" autocorrect="off" autocapitalize="off" placeholder="#">
+<span class="input-group-btn"><button type="submit" class="btn">ñ¢ñûÇÇ‹Ç∆Çﬂì«Ç›</button></span></div>
 </form>
 EOP;
 
@@ -220,7 +222,7 @@ if (!$aThreadList->spmode || $aThreadList->spmode == 'taborn' || $aThreadList->s
     $htm['change_sort'] .= "<input type=\"hidden\" name=\"bbs\" value=\"{$aThreadList->bbs}\">";
 }
 
-$htm['change_sort'] .= '<select name="sort">';
+$htm['change_sort'] .= '<div class="input-group"><select name="sort" class="form-control">';
 foreach ($sorts as $k => $v) {
     if ($GLOBALS['now_sort'] == $k) {
         $sb_sort_selected_at = ' selected';
@@ -241,9 +243,9 @@ if (!empty($_REQUEST['rsort'])) {
 } else {
     $sb_rsort_checked_at = '';
 }
-$htm['change_sort'] .= ' <input type="checkbox" id="sb_rsort" name="rsort" value="1"'
-                    . $sb_rsort_checked_at . '><label for="sb_rsort">ãtèá</label>';
-$htm['change_sort'] .= ' <input type="submit" value="ï¿Ç—ë÷Ç¶"></form>';
+$htm['change_sort'] .= ' <span class="input-group-addon"><input type="checkbox" id="sb_rsort" name="rsort" value="1"'
+                    . $sb_rsort_checked_at . '><label for="sb_rsort">ãtèá</label></span>';
+$htm['change_sort'] .= ' <span class="input-group-btn"><button type="submit" class="btn" >ï¿Ç—ë÷Ç¶</button></span></div></form>';
 
 echo $htm['change_sort'];
 
@@ -262,9 +264,15 @@ if (array_key_exists('method', $sb_filter) && $sb_filter['method'] == 'or') {
 echo <<<EOP
 <div id="sb_toolbar_filter" class="extra">
 <form id="sb_filter" method="get" action="{$_conf['subject_php']}" accept-charset="{$_conf['accept_charset']}">
-{$sb_form_hidden_ht}<input type="text" id="sb_filter_word" name="word" value="{$hd['word']}" size="15" autocorrect="off" autocapitalize="off">
-<input type="checkbox" id="sb_filter_method" name="method" value="or"{$hd['method_checked_at']}><label for="sb_filter_method">OR</label>
-<input type="submit" name="submit_kensaku" value="åüçı">
+<div class="input-group">
+{$sb_form_hidden_ht}<input type="text" id="sb_filter_word" name="word" class="form-control" value="{$hd['word']}" size="15" autocorrect="off" autocapitalize="off">
+<span class="input-group-addon">
+<label for="sb_filter_method"><input type="checkbox" id="sb_filter_method" name="method" value="or"{$hd['method_checked_at']}>OR</label>
+</span>
+<span class="input-group-btn">
+<button type="submit" class="btn" name="submit_kensaku" value="åüçı">åüçı</button>
+</span>
+</div>
 </form>
 </div>
 <div class="ntoolbar" id="pager">

@@ -104,6 +104,7 @@ EOHEADER;
 
 if (!$_conf['ktai']) {
     echo <<<EOP
+    <script type="text/javascript" src="js/jquery-{$_conf['jquery_version']}.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css.php?css=style&amp;skin={$skin_en}">
     <link rel="stylesheet" type="text/css" href="css.php?css=post&amp;skin={$skin_en}">\n
 EOP;
@@ -114,7 +115,6 @@ EOP;
 if (!$_conf['ktai'] || $_conf['iphone']) {
     echo <<<EOP
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <script type="text/javascript" src="js/jquery-{$_conf['jquery_version']}.min.js"></script>
     <script type="text/javascript" src="js/basic.js?{$_conf['p2_version_id']}"></script>
     <script type="text/javascript" src="js/post_form.js?{$_conf['p2_version_id']}"></script>\n
 EOP;

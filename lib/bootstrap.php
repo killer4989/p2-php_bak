@@ -438,7 +438,10 @@ EOS;
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
 <meta name="format-detection" content="telephone=no">
 {$_conf['touch_icon_ht']}
+<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css?{$_conf['p2_version_id']}">
 <link rel="stylesheet" type="text/css" media="screen" href="css/iphone.css?{$_conf['p2_version_id']}">
+<script type="text/javascript" src="js/jquery-{$_conf['jquery_version']}.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js?{$_conf['p2_version_id']}"></script>
 <script type="text/javascript" src="js/iphone.js?{$_conf['p2_version_id']}"></script>
 EOS;
 
@@ -447,7 +450,10 @@ EOS;
 // ã≠êßiPhoneÉrÉÖÅ[éû
 } elseif ($_conf['iphone']) {
     $_conf['extra_headers_ht'] .= <<<EOS
+<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.min.css?{$_conf['p2_version_id']}">
 <link rel="stylesheet" type="text/css" media="screen" href="css/iphone.css?{$_conf['p2_version_id']}">
+<script type="text/javascript" src="js/jquery-{$_conf['jquery_version']}.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js?{$_conf['p2_version_id']}"></script>
 <script type="text/javascript" src="js/iphone.js?{$_conf['p2_version_id']}"></script>
 EOS;
 }
